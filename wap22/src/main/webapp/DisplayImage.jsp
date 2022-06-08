@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%@ page import="wap.Logic.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,9 @@
 </head>
 <body>
 	<%
-
+	// Create DAO
+	DatabaseCrud dao = new DatabaseCrud();
+	List<Comment> comments = dao.listMatchingComments(Integer.parseInt(request.getParameter("pic_id")));
 	%>
 
 
@@ -50,6 +54,37 @@
 	</h3>
 	<%=request.getAttribute("dateofupload")%>
 
+	<h3>Comments:</h3>
+	<form action="/wap22/PostComment" method="POST">
+		<div>
+			<textarea name="comment" id="comment"
+				style="font-family: sans-serif; font-size: 1.2em;">
+Post your comment here.
+</textarea>
+		</div>
+		<input type="hidden" id="picId" name="picId"
+			value="<%=request.getAttribute("pic_id")%>"> <input
+			type="submit" value="Submit">
+	</form>
 
+	<h3>People have shared their comments:</h3>
+	<div>
+		<table border="1" cellpadding="5">
+			<tr>
+				<th>Posted on:</th>
+				<th>Content:</th>
+			</tr>
+			<%
+			for (int i = 0; i < comments.size(); i += 1) {
+			%>
+			<tr>
+			<td><%=comments.get(i).getDateposted() %>
+			<td><%=comments.get(i).getContent() %></td>
+			</tr>
+			<%
+			}
+			%>
+		</table>
+	</div>
 </body>
 </html>

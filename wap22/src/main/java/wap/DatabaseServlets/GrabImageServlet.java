@@ -71,6 +71,7 @@ public class GrabImageServlet extends HttpServlet {
 		request.setAttribute("file", photo.getFile());
 		request.setAttribute("filelink", photo.getFilelink());
 		request.setAttribute("base64Image", photo.getBase64Image());
+		request.setAttribute("pic_id", request.getParameter("pic_id"));
 		
 
 		//Object just in case

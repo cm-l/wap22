@@ -24,6 +24,8 @@
 				<th>Title</th>
 				<th>Author</th>
 				<th>Date of upload</th>
+				<th>Camera model</th>
+				<th>Editing sofware</th>
 			</tr>
 			<%
 			for (int i = 0; i < photos.size(); i += 1) {
@@ -38,6 +40,8 @@
 				<td><%=photos.get(i).getTitle()%></td>
 				<td><a href="/wap22/GrabUserServlet?user_id=<%=photos.get(i).getUser_pk_user()%>"><%=dao.getUser(photos.get(i).getUser_pk_user()).getUsername()%></a></td>
 				<td><%=photos.get(i).getDateofupload()%></td>
+				<td><%=photos.get(i).getCameramodel() %>
+				<td><%=photos.get(i).getEditingsoftware() %>
 			</tr>
 			<%
 			}

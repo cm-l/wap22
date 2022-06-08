@@ -323,6 +323,41 @@ public List<Photo> listMatchingPhoto(String criteria, String queried, String ord
 
 		return user;
 	}
+	
+	public List<Comment> listMatchingComments(int idpic) throws SQLException, ClassNotFoundException, IOException {
+	    List<Comment> listComments = new ArrayList<>();
+	    
+	    //Query by provided criteria
+	    String sql = "SELECT * FROM wap_opg.comment WHERE picture_pk_picture = " + idpic;
+	    
+		// Establish connection
+		Connection con = DatabaseConnection.initializeDatabase();
+		
+		//Statement
+		Statement statement = con.createStatement();
+		ResultSet resultSet = statement.executeQuery(sql);
+	     
+	    while (resultSet.next()) {
+			int id = (resultSet.getInt("pk_comment"));
+			int votes = (resultSet.getInt("votes"));
+	    	int picture_pk_picture = (resultSet.getInt("picture_pk_picture"));
+			String content = (resultSet.getString("content"));
+			Date dateposted = (resultSet.getDate("dateposted"));			
+
+
+			// And put it into an object
+			Comment comment = new Comment(id, votes, content, picture_pk_picture, dateposted);
+			
+	        listComments.add(comment);
+	    }
+	     
+		resultSet.close();
+		statement.close();
+		con.close();
+
+		return listComments;
+		
+	}
 
 
 }
