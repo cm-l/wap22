@@ -231,11 +231,11 @@ public List<Photo> listEveryPhoto() throws SQLException, ClassNotFoundException,
 	
 }
 
-public List<Photo> listMatchingPhoto(String criteria, String queried) throws SQLException, ClassNotFoundException, IOException {
+public List<Photo> listMatchingPhoto(String criteria, String queried, String order, String ascdesc) throws SQLException, ClassNotFoundException, IOException {
     List<Photo> listPhotos = new ArrayList<>();
     
     //Query by provided criteria
-    String sql = "SELECT * FROM wap_opg.picture WHERE " + criteria + " LIKE '%" + queried + "%'";
+    String sql = "SELECT * FROM wap_opg.picture WHERE " + criteria + " LIKE '%" + queried + "%' ORDER BY " + order + " " + ascdesc;
     
 	// Establish connection
 	Connection con = DatabaseConnection.initializeDatabase();
@@ -290,4 +290,39 @@ public List<Photo> listMatchingPhoto(String criteria, String queried) throws SQL
 	return listPhotos;
 	
 }
+
+//Return a SINGLE photo matching the provided primary key (id)
+	public wap.Logic.User getUser(int id) throws SQLException, ClassNotFoundException, IOException {
+		User user = null;
+		String sql = "SELECT * FROM user WHERE pk_user = ?";
+
+		// Establish connection
+		Connection con = DatabaseConnection.initializeDatabase();
+
+		PreparedStatement statement = con.prepareStatement(sql);
+		statement.setInt(1, id);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		// Get data about this particular picture
+		if (resultSet.next()) {
+			String username = (resultSet.getString("username"));
+			String email = (resultSet.getString("email"));
+			Date registrationdate = (resultSet.getDate("registrationdate"));
+			int isadmin = (resultSet.getInt("isadmin"));
+			int ismod = (resultSet.getInt("ismod"));
+			int userprofile_pk_userprofile = (resultSet.getInt("userprofile_pk_userprofile"));
+
+			// And put it into an object
+			user = new User(id, username, username, email, registrationdate, isadmin, ismod, userprofile_pk_userprofile);
+		}
+
+		resultSet.close();
+		statement.close();
+		con.close();
+
+		return user;
+	}
+
+
 }

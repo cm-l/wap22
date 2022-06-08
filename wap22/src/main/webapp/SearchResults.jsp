@@ -11,6 +11,7 @@
 <body>
 	<%
 	List<Photo> photos = (List<Photo>) request.getAttribute("listPhotos");
+	DatabaseCrud dao = new DatabaseCrud();
 	%>
 	<div>
 		<table border="1" cellpadding="5">
@@ -22,7 +23,7 @@
 				<th>Image ID</th>
 				<th>Title</th>
 				<th>Author</th>
-				<th>Date</th>
+				<th>Date of upload</th>
 			</tr>
 			<%
 			for (int i = 0; i < photos.size(); i += 1) {
@@ -35,7 +36,7 @@
 				</a>
 				<td><%=photos.get(i).getId()%></td>
 				<td><%=photos.get(i).getTitle()%></td>
-				<td><%=photos.get(i).getUser_pk_user()%></td>
+				<td><a href="/wap22/GrabUserServlet?user_id=<%=photos.get(i).getUser_pk_user()%>"><%=dao.getUser(photos.get(i).getUser_pk_user()).getUsername()%></a></td>
 				<td><%=photos.get(i).getDateofupload()%></td>
 			</tr>
 			<%
