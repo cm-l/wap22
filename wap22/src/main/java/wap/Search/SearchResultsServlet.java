@@ -42,7 +42,7 @@ public class SearchResultsServlet extends HttpServlet {
 		// The photo
 		List<Photo> photos;
 		try {
-			photos = dao.listEveryPhoto();
+			photos = dao.listMatchingPhoto("title", "Jerm");
 			request.setAttribute("listPhotos", photos);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("SearchResults.jsp");
 			dispatcher.forward(request, response);

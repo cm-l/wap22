@@ -230,4 +230,64 @@ public List<Photo> listEveryPhoto() throws SQLException, ClassNotFoundException,
 	return listPhotos;
 	
 }
+
+public List<Photo> listMatchingPhoto(String criteria, String queried) throws SQLException, ClassNotFoundException, IOException {
+    List<Photo> listPhotos = new ArrayList<>();
+    
+    //Query by provided criteria
+    String sql = "SELECT * FROM wap_opg.picture WHERE " + criteria + " LIKE '%" + queried + "%'";
+    
+	// Establish connection
+	Connection con = DatabaseConnection.initializeDatabase();
+	
+	//Statement
+	Statement statement = con.createStatement();
+	ResultSet resultSet = statement.executeQuery(sql);
+     
+    while (resultSet.next()) {
+		int id = (resultSet.getInt("pk_picture"));
+    	int height = (resultSet.getInt("height"));
+		int width = (resultSet.getInt("width"));
+		String title = (resultSet.getString("title"));
+		String description = (resultSet.getString("description"));
+		String cameramodel = (resultSet.getString("cameramodel"));
+		String editingsoftware = (resultSet.getString("editingsoftware"));
+		String fileformat = (resultSet.getString("fileformat"));
+		Long filesize = (resultSet.getLong("filesize"));
+		Date dateofupload = (resultSet.getDate("dateofupload"));
+		int user_pk_user = (resultSet.getInt("user_pk_user"));
+		int score = (resultSet.getInt("score"));
+		Blob file = (resultSet.getBlob("file"));
+		String filelink = (resultSet.getString("filelink"));
+
+		// Imagefile
+		InputStream inputStream = file.getBinaryStream();
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[4096];
+		int bytesRead = -1;
+
+		while ((bytesRead = inputStream.read(buffer)) != -1) {
+			outputStream.write(buffer, 0, bytesRead);
+		}
+
+		byte[] imageBytes = outputStream.toByteArray();
+
+		String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+		inputStream.close();
+		outputStream.close();
+
+		// And put it into an object
+		Photo photo = new Photo(id, title, width, height, description, cameramodel, fileformat, editingsoftware, filesize,
+				dateofupload, user_pk_user, score, file, filelink, base64Image);
+        listPhotos.add(photo);
+    }
+     
+	resultSet.close();
+	statement.close();
+	con.close();
+
+	return listPhotos;
+	
+}
 }

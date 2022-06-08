@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Welcome to Photoscope!</h1>
-	<h2>To suit all your photography-related needs.</h2>
+	<h2>To suit all Your photography-related needs.</h2>
 	<a href="login.jsp">Login</a>||
 	<a href="LogoutServlet">Logout</a>||
 	<a href="ProfileServlet">My Profile</a>||
