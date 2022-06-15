@@ -5,10 +5,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- We are borrowing a fre and open access template for the visuals of our site -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="UTF-8">
 <title>Photoscope</title>
 </head>
 <body>
+<div class="w3-top">
+		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
+			<a
+				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> <a
+				href="index.jsp" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+			<a href="register.jsp"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">
+				Register</a> <a href="login.jsp"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Login
+			</a> <a href="searcher.jsp"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Search
+			</a> <a href="ImageUpload.jsp"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Upload
+			</a>
+		</div>
+		</div>
 	<%
 	// Create DAO
 	DatabaseCrud dao = new DatabaseCrud();
@@ -19,8 +44,7 @@
 	<h1>
 		<%=request.getAttribute("title")%></h1>
 
-	<img src="data:image/jpg;base64,${base64Image}" width="500"
-		height="500" />
+	<img src="data:image/jpg;base64,${base64Image}"/>
 
 	<h2>
 		Description: <br>
@@ -69,7 +93,7 @@ Post your comment here.
 
 	<h3>People have shared their comments:</h3>
 	<div>
-		<table border="1" cellpadding="5">
+		<table border="1" cellpadding="3">
 			<tr>
 				<th>Posted on:</th>
 				<th>Content:</th>
